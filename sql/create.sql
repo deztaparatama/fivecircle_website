@@ -1,11 +1,12 @@
 CREATE TABLE users
 (
 	id SERIAL,
-	pass VARCHAR(50),
+	password VARCHAR(50),
 	mail VARCHAR(320) UNIQUE,
 	name VARCHAR(50),
 	surname VARCHAR(50),
 	date_birth DATE,
+	status NUMERIC(1) DEFAULT 1,
 	created DATE DEFAULT NOW(),
 
 	PRIMARY KEY (id)
