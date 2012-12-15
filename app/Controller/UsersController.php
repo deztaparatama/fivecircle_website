@@ -13,7 +13,8 @@
 					'controller' => 'users',
 					'action' => 'login'
 				),
-				'authError' => 'Vous n\'avez pas le droit d\'accéder à cette page, veuillez vous connecter'
+				'authError' => 'Vous n\'avez pas le droit d\'accéder à cette page, veuillez vous connecter',
+				'logoutRedirect' => '/'
 			)
 		);
 
@@ -47,6 +48,7 @@
 
 		public function logout()
 		{
+			$this->Session->setFlash('Vous êtes maintenant déconnecté', 'flash', array('type' => 'success'));
 			$this->redirect($this->Auth->logout());
 		}
 
