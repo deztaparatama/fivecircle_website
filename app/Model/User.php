@@ -86,7 +86,9 @@
 
 		public function sameAs($check, $other)
 		{
-			return $this->data['User'][$other] == array_values($check)[0];
+			$value = array_values($check);
+			$value = $value[0];
+			return $this->data['User'][$other] == $value;
 		}
 
 		public function beforeSave($options = array())

@@ -2,6 +2,22 @@
 	
 	class AppController extends Controller
 	{
+		public $components = array(
+			'Auth' => array(
+				'authenticate' => array(
+					'Form' => array(
+						'fields' => array('username' => 'mail')
+					)
+				),
+				'loginAction' => array(
+					'controller' => 'users',
+					'action' => 'login'
+				),
+				'authError' => 'Pour pouvoir accéder à cette page, veuillez vous connecter',
+				'logoutRedirect' => '/'
+			)
+		);
+		
 		public function beforeFilter()
 		{
 			if($this->Auth->user('status') == 1)
