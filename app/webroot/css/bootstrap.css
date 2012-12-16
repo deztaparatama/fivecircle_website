@@ -5023,3 +5023,6 @@ body {
 .centre {
   text-align: center;
 }
+ul.dropdown-menu i {
+  margin-right: 10px;
+}
