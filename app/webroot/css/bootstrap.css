@@ -5015,3 +5015,11 @@ body {
   padding-top: 60px;
   padding-bottom: 40px;
 }
+.control-group .error-message {
+  margin-top: -15px;
+  margin-left: 5px;
+  color: #9d261d;
+}
+.centre {
+  text-align: center;
+}

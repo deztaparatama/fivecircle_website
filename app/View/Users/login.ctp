@@ -30,3 +30,7 @@
 	'div' => false,
 	'class' => 'btn btn-primary'
 )); ?>
+
+<div class="centre">
+	Pas de compte ? <?php echo $this->Html->link('Inscrivez-vous', array('controller' => 'users', 'action' => 'signup')); ?> !
+</div>

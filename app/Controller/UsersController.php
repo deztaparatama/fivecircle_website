@@ -13,7 +13,7 @@
 					'controller' => 'users',
 					'action' => 'login'
 				),
-				'authError' => 'Vous n\'avez pas le droit d\'accéder à cette page, veuillez vous connecter',
+				'authError' => 'Pour pouvoir accéder à cette page, veuillez vous connecter',
 				'logoutRedirect' => '/'
 			)
 		);
@@ -54,6 +54,36 @@
 
 		public function signup()
 		{
-			// Méthode d'inscription
+			if($this->Auth->user('id'))
+			{
+				$this->Session->setFlash('Vous êtes déjà connecté', 'flash', array('type' => 'warning'));
+				$this->redirect('/');
+			}
+
+			if($this->request->is('post'))
+			{
+				if($this->User->save($this->request->data))
+				{
+					$this->Session->setFlash('Vous avez bien été inscrit, vous pouvez maintenant vous connecter', 'flash', array('type' => 'success'));
+					$this->redirect(array('controller' => 'users', 'action' => 'login'));
+				}
+				else
+				{
+					if($this->User->find('count', array(
+						'conditions' => array('mail' => $this->request->data['User']['mail']),
+						'recursive' => -1
+					)))
+					{
+						$this->User->validationErrors['mail'] = array('Cette adresse email est déjà utilisée');
+					}
+
+					$this->Session->setFlash('Il y a des erreurs dans le formulaire', 'flash', array('type' => 'error'));
+				}
+			}
+		}
+
+		public function index()
+		{
+			// Méthode pour l'accueil de l'utilisateur
 		}
 	}

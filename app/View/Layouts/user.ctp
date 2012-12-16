@@ -28,7 +28,23 @@
 
 		</div>
 
-		<?php echo $this->fetch('js'); ?>
+		<?php
+
+			echo $this->Html->script('jquery');
+			echo $this->Html->script('bootstrap-transition');
+			echo $this->Html->script('bootstrap-alert');
+			echo $this->Html->script('bootstrap-modal');
+			echo $this->Html->script('bootstrap-dropdown');
+			echo $this->Html->script('bootstrap-scrollspy');
+			echo $this->Html->script('bootstrap-tab');
+			echo $this->Html->script('bootstrap-tooltip');
+			echo $this->Html->script('bootstrap-popover');
+			echo $this->Html->script('bootstrap-button');
+			echo $this->Html->script('bootstrap-collapse');
+			echo $this->Html->script('bootstrap-carousel');
+			echo $this->Html->script('bootstrap-typeahead');
+			
+		?>
 
 	</body>
 
