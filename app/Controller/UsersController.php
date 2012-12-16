@@ -2,6 +2,8 @@
 
 	class UsersController extends AppController
 	{
+		public $helpers = array('Session', 'Html', 'Form');
+
 		public function beforeFilter()
 		{
 			parent::beforeFilter();

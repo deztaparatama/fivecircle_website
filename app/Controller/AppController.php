@@ -2,7 +2,9 @@
 	
 	class AppController extends Controller
 	{
-		public $components = array(
+		public $helpers = array('Session', 'Html');
+		
+		public $components = array('Session',
 			'Auth' => array(
 				'authenticate' => array(
 					'Form' => array(
@@ -17,7 +19,7 @@
 				'logoutRedirect' => '/'
 			)
 		);
-		
+
 		public function beforeFilter()
 		{
 			if($this->Auth->user('status') == 1)
