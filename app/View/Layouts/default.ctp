@@ -26,6 +26,14 @@
 
 			<?php echo $this->element('sql_dump'); ?>
 
+			<hr>
+			<footer>
+				Site web créé par Mickaël Bourgier
+				<div class="pull-right">
+					Application mobile par Timothé Bournay, Vincent Dimper, Benoit Gros et Alexandre Pinto
+				</div>
+			</footer>
+
 		</div>
 
 		<?php
