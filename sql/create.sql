@@ -1,8 +1,9 @@
 CREATE TABLE users
 (
 	id SERIAL,
-	password VARCHAR(50),
-	mail VARCHAR(320) UNIQUE,
+	pseudo VARCHAR(50) UNIQUE,
+	password VARCHAR(50) NOT NULL,
+	mail VARCHAR(320) NOT NULL,
 	name VARCHAR(50),
 	surname VARCHAR(50),
 	date_birth DATE,

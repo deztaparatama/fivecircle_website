@@ -8,7 +8,7 @@
 			'Auth' => array(
 				'authenticate' => array(
 					'Form' => array(
-						'fields' => array('username' => 'mail')
+						'fields' => array('username' => 'pseudo')
 					)
 				),
 				'loginAction' => array(

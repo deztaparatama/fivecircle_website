@@ -60,6 +60,11 @@
 		);
 
 		public $validate = array(
+			'pseudo' => array(
+				'rule' => 'notEmpty',
+				'required' => true,
+				'message' => 'Le pseudo ne doit pas être vide'
+			),
 			'mail' => array(
 				'notEmpty' => array(
 					'rule' => 'notEmpty',

@@ -1,11 +1,11 @@
 SET datestyle TO european;
 
 -- users(id, pass, mail, name, surname, date_birth, created)
-INSERT INTO users VALUES(DEFAULT, '24c77611993f4b5ce8751ee71f8d433acd61f673', 'benoit.gros.93@gmail.com', 'Gros', 'Benoit', '8/12/2012', DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mikckaël', '8/12/2012', DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, '24c77611993f4b5ce8751ee71f8d433acd61f673', 'vincentdimper@gmail.com', 'Dimper', 'Vincent', '8/12/2012', DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, '24c77611993f4b5ce8751ee71f8d433acd61f673', 'timothe.bournay@gmail.com', 'Bournay', 'Timothe', '8/12/2012', DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, '24c77611993f4b5ce8751ee71f8d433acd61f673', 'elunywow@gmail.com', 'Pinto', 'Alexandre', '8/12/2012', DEFAULT, '01/01/2012');
+INSERT INTO users VALUES(DEFAULT, 'iotaquigere', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'benoit.gros.93@gmail.com', 'Gros', 'Benoit', '8/12/2012', DEFAULT, '01/01/2012');
+INSERT INTO users VALUES(DEFAULT, 'chapa', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mikckaël', '8/12/2012', DEFAULT, '01/01/2012');
+INSERT INTO users VALUES(DEFAULT, 'skorp', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'vincentdimper@gmail.com', 'Dimper', 'Vincent', '8/12/2012', DEFAULT, '01/01/2012');
+INSERT INTO users VALUES(DEFAULT, 'KonRan', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'timothe.bournay@gmail.com', 'Bournay', 'Timothe', '8/12/2012', DEFAULT, '01/01/2012');
+INSERT INTO users VALUES(DEFAULT, 'elunywow', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'elunywow@gmail.com', 'Pinto', 'Alexandre', '8/12/2012', DEFAULT, '01/01/2012');
 
 -- places(id, name, photo_name, latitude, longitude)
 INSERT INTO places VALUES(DEFAULT, 'IUT2', 'IUT_2_-_Grenoble.JPG', 45.192026, 5.717327);

@@ -24,6 +24,11 @@
 
 	<?php
 		
+		if($this->Form->isFieldError('pseudo'))
+			echo $this->Form->input('pseudo', array('placeholder' => 'Pseudo', 'div' => 'control-group error'));
+		else
+			echo $this->Form->input('pseudo', array('placeholder' => 'Pseudo'));
+
 		if($this->Form->isFieldError('mail'))
 			echo $this->Form->input('mail', array('placeholder' => 'Adresse email', 'div' => 'control-group error'));
 		else

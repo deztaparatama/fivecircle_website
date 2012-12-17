@@ -22,7 +22,7 @@
 	
 	<h2 class="form-signin-heading">Connectez-vous !</h2>
 
-	<?php echo $this->Form->input('mail', array('placeholder' => 'Adresse email')); ?>
+	<?php echo $this->Form->input('pseudo', array('placeholder' => 'Pseudo')); ?>
 	<?php echo $this->Form->input('password', array('placeholder' => 'Mot de passe')); ?>
 
 <?php echo $this->Form->end(array(
