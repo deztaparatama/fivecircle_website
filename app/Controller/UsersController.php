@@ -2,7 +2,7 @@
 
 	class UsersController extends AppController
 	{
-		public $helpers = array('Session', 'Html', 'Form');
+		public $helpers = array('Session', 'Html', 'Form', 'Date');
 
 		public function beforeFilter()
 		{
@@ -74,6 +74,32 @@
 					$this->Session->setFlash('Il y a des erreurs dans le formulaire', 'flash', array('type' => 'error'));
 				}
 			}
+		}
+
+		public function profile($id = 0)
+		{
+			$id = (int)$id;
+			if($id == 0)
+				$idUser = $this->Auth->user('id');
+			else
+				$idUser = $id;
+
+			$d = $this->User->find('first', array(
+				'conditions' => array('id' => $idUser),
+				'recursive' => -1
+			));
+
+			if(empty($d))
+			{
+				$this->Session->setFlash('Ce membre n\'existe pas', 'flash', array('type' => 'error'));
+				$this->redirect(array('controller' => 'users', 'action' => 'profile'));
+			}
+
+			if($id == 0 || $id == $this->Auth->user('id'))
+				$this->set('title_for_layout', 'Votre profil');
+			else
+				$this->set('title_for_layout', 'Profil de ' . $d['User']['pseudo']);
+			$this->set('user', $d);
 		}
 
 		public function index()
