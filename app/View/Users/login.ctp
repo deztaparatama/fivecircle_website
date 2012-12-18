@@ -15,8 +15,14 @@
 	'class' => 'form-signin',
 	'inputDefaults' => array(
 		'label' => false,
-		'div' => false,
-		'class' => 'input-block-level'
+		'div' => 'control-group',
+		'class' => 'input-block-level',
+		'error' => array(
+			'attributes' => array(
+				'wrap' => 'span',
+				'class' => 'help-inline'
+			)
+		)
 	)
 )); ?>
 	

@@ -5015,10 +5015,13 @@ body {
   padding-top: 60px;
   padding-bottom: 40px;
 }
-.control-group .error-message {
-  margin-top: -15px;
-  margin-left: 5px;
-  color: #9d261d;
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+  margin-bottom: 5px;
+}
+.form-signin input[type="text"].form-error,
+.form-signin input[type="password"].form-error {
+  margin-bottom: 0px;
 }
 .centre {
   text-align: center;

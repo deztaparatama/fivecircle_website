@@ -15,34 +15,26 @@
 	'class' => 'form-signin',
 	'inputDefaults' => array(
 		'label' => false,
-		'div' => false,
-		'class' => 'input-block-level'
+		'div' => 'control-group',
+		'class' => 'input-block-level',
+		'error' => array(
+			'attributes' => array(
+				'wrap' => 'span',
+				'class' => 'help-inline'
+			)
+		)
 	)
 )); ?>
 	
 	<h2 class="form-signin-heading">Inscrivez-vous !</h2>
 
 	<?php
-		
-		if($this->Form->isFieldError('pseudo'))
-			echo $this->Form->input('pseudo', array('placeholder' => 'Pseudo', 'div' => 'control-group error'));
-		else
-			echo $this->Form->input('pseudo', array('placeholder' => 'Pseudo'));
 
-		if($this->Form->isFieldError('mail'))
-			echo $this->Form->input('mail', array('placeholder' => 'Adresse email', 'div' => 'control-group error'));
-		else
-			echo $this->Form->input('mail', array('placeholder' => 'Adresse email'));
+		echo $this->Form->input('pseudo', array('placeholder' => 'Pseudo'));
+		echo $this->Form->input('mail', array('placeholder' => 'Adresse email'));
+		echo $this->Form->input('password', array('placeholder' => 'Mot de passe'));
+		echo $this->Form->input('password2', array('type' => 'password', 'placeholder' => 'Confirmer le mot de passe'));
 
-		if($this->Form->isFieldError('password'))
-			echo $this->Form->input('password', array('placeholder' => 'Mot de passe', 'div' => 'control-group error'));
-		else
-			echo $this->Form->input('password', array('placeholder' => 'Mot de passe'));
-
-		if($this->Form->isFieldError('password2'))
-			echo $this->Form->input('password2', array('type' => 'password', 'placeholder' => 'Confirmer le mot de passe', 'div' => 'control-group error'));
-		else
-			echo $this->Form->input('password2', array('type' => 'password', 'placeholder' => 'Confirmer le mot de passe'));
 	?>
 
 <?php echo $this->Form->end(array(
