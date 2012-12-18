@@ -102,6 +102,43 @@
 			$this->set('user', $d);
 		}
 
+		public function settings($id = 0)
+		{
+			$id = (int)$id;
+			if($id == 0)
+				$idUser = $this->Auth->user('id');
+			else if($this->Auth->user('status') >= 2)
+				$idUser = $id;
+			else
+			{
+				$this->Session->setFlash('Vous ne pouvez pas accéder aux réglages des autres utilisateurs', 'flash', array('type' => 'error'));
+				$this->redirect(array('controller' => 'users', 'action' => 'settings'));
+			}
+
+			if(!empty($this->request->data))
+			{
+				$this->Session->setFlash('Héhé ! Ça ne marche pas encore ... mais les erreurs ci-dessous sont tout à fait normales ;)', 'flash', array('type' => 'warning'));
+			}
+			else
+			{
+				$this->data = $this->User->find('first', array(
+					'conditions' => array('id' => $idUser),
+					'recursive' => -1
+				));
+			}
+
+			if(empty($this->data))
+			{
+				$this->Session->setFlash('Ce membre n\'existe pas', 'flash', array('type' => 'error'));
+				$this->redirect(array('controller' => 'users', 'action' => 'settings'));
+			}
+
+			if($id == 0 || $id == $this->Auth->user('id'))
+				$this->set('title_for_layout', 'Réglages de votre profil');
+			else
+				$this->set('title_for_layout', 'Réglages du profil de ' . $this->data['User']['pseudo']);
+		}
+
 		public function index()
 		{
 			// Méthode pour l'accueil de l'utilisateur

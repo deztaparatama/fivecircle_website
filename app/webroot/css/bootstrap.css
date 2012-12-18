@@ -5023,6 +5023,28 @@ body {
 .form-signin input[type="password"].form-error {
   margin-bottom: 0px;
 }
+@media (min-width: 979px) {
+  .form-horizontal .control-label {
+    width: 360px;
+  }
+  .form-horizontal .controls {
+    margin-left: 380px;
+  }
+  .form-horizontal .form-actions {
+    padding-left: 380px;
+  }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  .form-horizontal .control-label {
+    width: 260px;
+  }
+  .form-horizontal .controls {
+    margin-left: 280px;
+  }
+  .form-horizontal .form-actions {
+    padding-left: 280px;
+  }
+}
 .centre {
   text-align: center;
 }
