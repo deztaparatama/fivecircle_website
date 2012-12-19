@@ -5023,6 +5023,9 @@ body {
 .form-signin input[type="password"].form-error {
   margin-bottom: 0px;
 }
+.form-horizontal .help-inline {
+  padding-left: 10px;
+}
 @media (min-width: 979px) {
   .form-horizontal .control-label {
     width: 360px;

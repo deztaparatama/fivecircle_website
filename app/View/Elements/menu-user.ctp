@@ -1,6 +1,6 @@
 <?php
-	$linkProfile = ($this->request->controller == 'users' AND $this->request->action == 'profile' AND $title_for_layout == 'Votre profil');
-	$linkSettings = ($this->request->controller == 'users' AND $this->request->action == 'settings');
+	$linkProfile = ($this->request->controller == 'users' AND $this->request->action == 'profile' AND $user['User']['id'] == $this->Session->read('Auth.User.id'));
+	$linkSettings = ($this->request->controller == 'users' AND $this->request->action == 'settings' AND $this->request->data['User']['id'] == $this->Session->read('Auth.User.id'));
 	$linkUser = ($linkProfile OR $linkSettings);
 ?>
 

@@ -104,39 +104,94 @@
 
 		public function settings($id = 0)
 		{
+			// $id = (int)$id;
+			// if($id == 0)
+			// 	$idUser = $this->Auth->user('id');
+			// else if($this->Auth->user('status') >= 2)
+			// 	$idUser = $id;
+			// else
+			// {
+			// 	$this->Session->setFlash('Vous ne pouvez pas accéder aux réglages des autres utilisateurs', 'flash', array('type' => 'error'));
+			// 	$this->redirect(array('controller' => 'users', 'action' => 'settings'));
+			// }
+
+			// if(!empty($this->request->data))
+			// {
+			// 	$this->Session->setFlash('Héhé ! Ça ne marche pas encore ... mais les erreurs ci-dessous sont tout à fait normales ;)', 'flash', array('type' => 'warning'));
+			// }
+			// else
+			// {
+			// 	$this->data = $this->User->find('first', array(
+			// 		'conditions' => array('id' => $idUser),
+			// 		'recursive' => -1
+			// 	));
+			// }
+
+			// if(empty($this->data))
+			// {
+			// 	$this->Session->setFlash('Ce membre n\'existe pas', 'flash', array('type' => 'error'));
+			// 	$this->redirect(array('controller' => 'users', 'action' => 'settings'));
+			// }
+
+			// if($id == 0 || $id == $this->Auth->user('id'))
+			// 	$this->set('title_for_layout', 'Réglages de votre profil');
+			// else
+			// 	$this->set('title_for_layout', 'Réglages du profil de ' . $this->data['User']['pseudo']);
 			$id = (int)$id;
 			if($id == 0)
-				$idUser = $this->Auth->user('id');
-			else if($this->Auth->user('status') >= 2)
-				$idUser = $id;
-			else
+			{
+				$id = $this->Auth->user('id');
+			}
+			else if($this->Auth->user('status') < 2)
 			{
 				$this->Session->setFlash('Vous ne pouvez pas accéder aux réglages des autres utilisateurs', 'flash', array('type' => 'error'));
 				$this->redirect(array('controller' => 'users', 'action' => 'settings'));
 			}
 
-			if(!empty($this->request->data))
+			$user = $this->User->find('first', array(
+				'conditions' => array('id' => $id),
+				'recursive' => -1
+			));
+
+			if(empty($user))
 			{
-				$this->Session->setFlash('Héhé ! Ça ne marche pas encore ... mais les erreurs ci-dessous sont tout à fait normales ;)', 'flash', array('type' => 'warning'));
-			}
-			else
-			{
-				$this->data = $this->User->find('first', array(
-					'conditions' => array('id' => $idUser),
-					'recursive' => -1
-				));
+				$this->Session->setFlash('Cet utilisateur n\'existe pas', 'flash', array('type' => 'error'));
+				$this->redirect(array('controller' => 'users', 'action' => 'settings'));
 			}
 
-			if(empty($this->data))
+			if($this->request->is('post') || $this->request->is('put'))
 			{
-				$this->Session->setFlash('Ce membre n\'existe pas', 'flash', array('type' => 'error'));
-				$this->redirect(array('controller' => 'users', 'action' => 'settings'));
+				if(empty($this->request->data['User']['password']))
+				{
+					unset($this->request->data['User']['oldPassword']);
+					unset($this->request->data['User']['password']);
+					unset($this->request->data['User']['password2']);
+				}
+
+				$this->User->id = $id;
+				if($this->User->save($this->request->data))
+				{
+					$this->Session->setFlash('Les modifications ont bien étés enregistrées', 'flash', array('type' => 'success'));
+					$user = $this->User->find('first', array(
+						'conditions' => array('id' => $id),
+						'recursive' => -1
+					));
+				}
+				else
+				{
+					$this->Session->setFlash('Il y a une erreur dans le formulaire', 'flash', array('type' => 'error'));
+				}
 			}
 
 			if($id == 0 || $id == $this->Auth->user('id'))
 				$this->set('title_for_layout', 'Réglages de votre profil');
 			else
-				$this->set('title_for_layout', 'Réglages du profil de ' . $this->data['User']['pseudo']);
+				$this->set('title_for_layout', 'Réglages du profil de ' . $user['User']['pseudo']);
+			
+			if(empty($this->User->validationErrors))
+				$this->request->data = $user;
+			else
+				$this->request->data['User'] += $user['User'];
 		}
 
 		public function index()

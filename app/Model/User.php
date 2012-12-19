@@ -63,7 +63,8 @@
 			'pseudo' => array(
 				'rule' => 'notEmpty',
 				'required' => true,
-				'message' => 'Le pseudo ne doit pas être vide'
+				'message' => 'Le pseudo ne doit pas être vide',
+				'on' => 'create'
 			),
 			'mail' => array(
 				'notEmpty' => array(
@@ -80,12 +81,14 @@
 			'password' => array(
 				'rule' => 'notEmpty',
 				'required' => true,
-				'message' => 'Le mot de passe ne doit pas être vide'
+				'message' => 'Le mot de passe ne doit pas être vide',
+				'on' => 'create'
 			),
 			'password2' => array(
 				'rule' => array('sameAs', 'password'),
 				'required' => true,
-				'message' => 'Les mots de passes sont différents'
+				'message' => 'Les mots de passes sont différents',
+				'on' => 'create'
 			)
 		);
 
@@ -98,7 +101,16 @@
 
 		public function beforeSave($options = array())
 		{
-			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+			if(isset($this->data['User']['password']))
+				$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+			if(isset($this->data['User']['date_birth']))
+			{
+				// PAS TROP TOP ÇA ...
+				$elems = explode(' ', $this->data['User']['date_birth']);
+				$mois = array('Janvier' => '01', 'Février' => '02', 'Mars' => '03', 'Avril' => '04', 'Mai' => '05', 'Juin' => '06', 'Juillet' => '07', 'Août' => '08', 'Septembre' => '09', 'Octobre' => '10', 'Novembre' => '11', 'Décembre' => '12');
+				$this->data['User']['date_birth'] = $elems[0] . '-' . $mois[$elems[1]] . '-' . $elems[2];
+			}
+			
 			return true;
 		}
 	}
