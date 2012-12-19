@@ -7,6 +7,7 @@
 		<title>fivecircle - <?php echo $this->fetch('title'); ?></title>
 		<?php echo $this->Html->css('bootstrap'); ?>
 		<?php echo $this->Html->css('responsive'); ?>
+		<?php echo $this->Html->css('jquery-ui'); ?>
 		<style type="text/css">
 			<?php echo $this->fetch('style'); ?>
 		</style>
@@ -17,7 +18,7 @@
 
 		<?php echo $this->Element('menu-default'); ?>
 
-		<div class="container-fluid">
+		<div class="container">
 
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->Session->flash('auth', array('element' => 'flash', 'params' => array('type' => 'error'))); ?>
@@ -39,6 +40,7 @@
 		<?php
 
 			echo $this->Html->script('jquery');
+			echo $this->Html->script('jquery-ui');
 			echo $this->Html->script('bootstrap-transition');
 			echo $this->Html->script('bootstrap-alert');
 			echo $this->Html->script('bootstrap-modal');
@@ -51,6 +53,7 @@
 			echo $this->Html->script('bootstrap-collapse');
 			echo $this->Html->script('bootstrap-carousel');
 			echo $this->Html->script('bootstrap-typeahead');
+			echo $this->Html->script('application');
 			
 		?>
 
