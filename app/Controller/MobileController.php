@@ -7,7 +7,7 @@
 		public function beforeFilter()
 		{
 			parent::beforeFilter();
-			$this->Auth->allow('request');
+			$this->Auth->allow('request', 'userPlaces');
 		}
 
 		private function sendPostValues($values)
@@ -66,6 +66,65 @@
 					'deazoi' => 'o,pfez'
 				)
 			));
+
+			$this->set('_serialize', 'request');
+		}
+
+		public function userPlaces()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['id']))
+				$champsManquants[] = 'id';
+
+			if(empty($champsManquants))
+			{
+				$_POST['id'] = (int)$_POST['id'];
+
+				$this->loadModel('User');
+				$user = $this->User->findById($_POST['id'], array('id', 'pseudo', 'mail', 'name', 'surname', 'date_birth', 'status', 'created'));
+
+				if(!empty($user))
+				{
+					$this->loadModel('Place');
+					$timeline = array();
+					foreach($user['Visited'] as $k => $v)
+					{
+						$timeline[$k] = $this->Place->findById($v['place_id'], array('id', 'name', 'photo_name'));
+						$timeline[$k]['date'] = $v['created'];
+						foreach($user['Mark'] as $l => $w)
+						{
+							if($w['place_id'] == $v['place_id'])
+							{
+								unset($w['user_id']); unset($w['place_id']);
+								$timeline[$k]['Mark'] = $w;
+								unset($user['Mark'][$l]);
+							}
+						}
+						foreach($user['PlaceComment'] as $l => $w)
+						{
+							if($w['place_id'] == $v['place_id'])
+							{
+								unset($w['user_id']); unset($w['place_id']);
+								$timeline[$k]['PlaceComment'] = $w;
+								unset($user['PlaceComment'][$l]);
+							}
+						}
+					}
+
+					$this->set('request', array('User' => $user['User'], 'Timeline' => $timeline));
+				}
+				else
+				{
+					$this->set('request', array('error' => 1));
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
 
 			$this->set('_serialize', 'request');
 		}
