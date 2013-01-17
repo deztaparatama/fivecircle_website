@@ -7,7 +7,7 @@
 		public function beforeFilter()
 		{
 			parent::beforeFilter();
-			$this->Auth->allow('request', 'userPlaces');
+			$this->Auth->allow();
 		}
 
 		private function sendPostValues($values)
@@ -120,6 +120,68 @@
 				{
 					$this->set('request', array('error' => 1));
 				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
+
+		public function timeline()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+$_POST['id'] = 1;
+			$champsManquants = array();
+			if(empty($_POST['id']))
+				$champsManquants[] = 'id';
+
+			if(empty($champsManquants))
+			{
+				$_POST['id'] = (int)$_POST['id'];
+
+				// Recherche des amis
+				$this->loadModel('User');
+				$user = $this->User->findById($_POST['id']);
+				$friends = array();
+				foreach($user['Friend'] as $v)
+					$friends[] = $v['friend_id'];
+
+				// Création de la timeline
+				$this->loadModel('Visited');
+				$timeline = $this->Visited->find('all', array(
+					'conditions' => array('User.id' => $friends),
+					'fields' => array(
+						'Visited.id', 'Visited.created',
+						'User.id', 'User.pseudo', 'User.name', 'User.surname',
+						'Place.id', 'Place.name', 'Place.photo_name'
+					),
+					'order' => 'Visited.created DESC'
+				));
+
+				// Ajout des commentaires
+				$this->loadModel('PlaceComment');
+				foreach($timeline as $k => $v)
+				{
+					$timeline[$k] += $this->PlaceComment->find('first', array(
+						'conditions' => array('user_id' => $v['User']['id'], 'place_id' => $v['Place']['id']),
+						'fields' => array('id', 'content')
+					));
+				}
+
+				// Ajout des notes
+				$this->loadModel('Mark');
+				foreach($timeline as $k => $v)
+				{
+					$timeline[$k] += $this->Mark->find('first', array(
+						'conditions' => array('user_id' => $v['User']['id'], 'place_id' => $v['Place']['id']),
+						'fields' => array('id', 'mark')
+					));
+				}
+
+				$this->set('request', $timeline);
 			}
 			else
 			{
