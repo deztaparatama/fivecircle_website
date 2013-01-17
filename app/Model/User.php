@@ -5,6 +5,19 @@
 		public $displayField = 'name';
 
 		public $hasMany = array(
+			'Friend' => array(
+				'className' => 'Friend',
+				'foreignKey' => 'user_id',
+				'dependent' => false,
+				'conditions' => '',
+				'fields' => '',
+				'order' => '',
+				'limit' => '',
+				'offset' => '',
+				'exclusive' => '',
+				'finderQuery' => '',
+				'counterQuery' => ''
+			),
 			'Visited' => array(
 				'className' => 'Visited',
 				'foreignKey' => 'user_id',

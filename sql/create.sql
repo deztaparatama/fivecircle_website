@@ -13,6 +13,18 @@ CREATE TABLE users
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE friends
+(
+	id SERIAL,
+	user_id INTEGER,
+	friend_id INTEGER,
+	created DATE DEFAULT NOW(),
+
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (friend_id) REFERENCES users(id),
+	PRIMARY KEY (id)
+);
+
 CREATE TABLE places
 (
 	id SERIAL,
@@ -29,7 +41,7 @@ CREATE TABLE visited
 	id SERIAL,
 	user_id INTEGER,
 	place_id INTEGER,
-	created DATE DEFAULT NOW(),
+	created TIMESTAMP DEFAULT NOW(),
 
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (place_id) REFERENCES places(id),

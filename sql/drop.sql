@@ -3,4 +3,5 @@ DROP TABLE place_comments;
 DROP TABLE marks;
 DROP TABLE visited;
 DROP TABLE places;
+DROP TABLE friends;
 DROP TABLE users;
