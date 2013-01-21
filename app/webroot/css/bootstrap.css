@@ -5051,7 +5051,7 @@ body {
 .centre {
   text-align: center;
 }
-ul.dropdown-menu i {
+.navbar i {
   margin-right: 10px;
 }
 i.h4 {
@@ -5059,4 +5059,15 @@ i.h4 {
 }
 footer {
   font-size: 0.8em;
+}
+.placeThumbnail {
+  margin-right: 20px;
+  margin-bottom: -10px;
+}
+.placeThumbnail img {
+  height: 100px;
+}
+.centre {
+  display: block;
+  text-align: center;
 }

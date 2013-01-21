@@ -1,8 +1,13 @@
-!function ($)
-{
-	$(function()
+$(
+	function()
 	{
-		$("#datepicker").datepicker({ dateFormat: "dd MM yy" });
-	})
+		$('#datepicker').datepicker({dateFormat:'dd MM yy'});
 
-}(window.jQuery)
+		$('.placeThumbnail img').click(function(){ // faire plutôt des animate...
+			if($(this).css('height') == '100px')
+				$(this).css('height', 'inherit');
+			else
+				$(this).css('height', '100px');
+		});
+	}
+);

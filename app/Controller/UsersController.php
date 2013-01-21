@@ -196,6 +196,44 @@
 
 		public function index()
 		{
-			// Méthode pour l'accueil de l'utilisateur
+			// Recherche des amis
+			$user = $this->User->findById($this->Auth->user('id'));
+			$friends = array();
+			foreach($user['Friend'] as $v)
+				$friends[] = $v['friend_id'];
+
+			// Création de la timeline
+			$this->loadModel('Visited');
+			$timeline = $this->Visited->find('all', array(
+				'conditions' => array('User.id' => $friends),
+				'fields' => array(
+					'Visited.id', 'Visited.created',
+					'User.id', 'User.pseudo', 'User.name', 'User.surname',
+					'Place.id', 'Place.name', 'Place.photo_name'
+				),
+				'order' => 'Visited.created DESC'
+			));
+
+			// Ajout des commentaires
+			$this->loadModel('PlaceComment');
+			foreach($timeline as $k => $v)
+			{
+				$timeline[$k] += $this->PlaceComment->find('first', array(
+					'conditions' => array('user_id' => $v['User']['id'], 'place_id' => $v['Place']['id']),
+					'fields' => array('id', 'content')
+				));
+			}
+
+			// Ajout des notes
+			$this->loadModel('Mark');
+			foreach($timeline as $k => $v)
+			{
+				$timeline[$k] += $this->Mark->find('first', array(
+					'conditions' => array('user_id' => $v['User']['id'], 'place_id' => $v['Place']['id']),
+					'fields' => array('id', 'mark')
+				));
+			}
+
+			$this->set('timeline', $timeline);
 		}
 	}
