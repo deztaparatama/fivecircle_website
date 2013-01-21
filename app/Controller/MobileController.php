@@ -70,6 +70,41 @@
 			$this->set('_serialize', 'request');
 		}
 
+		public function login()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['pseudo']))
+				$champsManquants[] = 'pseudo';
+			if(empty($_POST['password']))
+				$champsManquants[] = 'password';
+
+			if(empty($champsManquants))
+			{
+				$this->loadModel('User');
+				$user = $this->User->find('first', array(
+					'conditions' => array('pseudo' => $_POST['pseudo'], 'password' => AuthComponent::password($_POST['password'])),
+					'fields' => 'User.id',
+					'recursive' => -1
+				));
+
+				if(!empty($user))
+					$id = $user['User']['id'];
+				else
+					$id = 0;
+
+				$this->set('request', $id);
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
+
 		public function userPlaces()
 		{
 			if($this->layoutPath != 'json')
