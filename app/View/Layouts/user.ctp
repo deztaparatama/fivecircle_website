@@ -4,7 +4,7 @@
 	<head>
 
 		<?php echo $this->Html->charset(); ?>
-		<title>fivecircle - <?php echo $this->fetch('title'); ?></title>
+		<title>fivecircle • <?php echo $this->fetch('title'); ?></title>
 		<?php echo $this->Html->css('bootstrap'); ?>
 		<?php echo $this->Html->css('responsive'); ?>
 		<?php echo $this->Html->css('jquery-ui'); ?>

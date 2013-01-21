@@ -1,4 +1,5 @@
 <?php
+	$linkIndex = ($this->request->controller == 'users' AND $this->request->action == 'index');
 	$linkProfile = ($this->request->controller == 'users' AND $this->request->action == 'profile' AND $user['User']['id'] == $this->Session->read('Auth.User.id'));
 	$linkSettings = ($this->request->controller == 'users' AND $this->request->action == 'settings' AND $this->request->data['User']['id'] == $this->Session->read('Auth.User.id'));
 	$linkUser = ($linkProfile OR $linkSettings);
@@ -13,6 +14,13 @@
 				<span class="icon-bar"></span>
 			</a>
 			<?php echo $this->Html->link('five<strong>circle</strong>', '/', array('class' => 'brand', 'escape' => false)); ?>
+			<div class="nav-collapse">
+				<ul class="nav">
+					<li<?php echo $linkIndex ? ' class="active"' : ''; ?>>
+						<?php echo $this->Html->link('<i class="icon-home"></i>Accueil', array('controller' => 'users', 'action' => 'index'), array('escape' => false)); ?>
+					</li>
+				</ul>
+			</div>
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li class="dropdown<?php echo $linkUser ? ' active' : ''; ?>">
