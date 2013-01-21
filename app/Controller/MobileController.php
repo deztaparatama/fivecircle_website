@@ -193,7 +193,7 @@
 						'fields' => array(
 							'Visited.id', 'Visited.created',
 							'User.id', 'User.pseudo', 'User.name', 'User.surname',
-							'Place.id', 'Place.name', 'Place.photo_name'
+							'Place.id', 'Place.name', 'Place.photo_name', 'Place.latitude', 'Place.longitude'
 						),
 						'order' => 'Visited.created DESC'
 					));
