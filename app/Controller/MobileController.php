@@ -132,7 +132,7 @@
 				{
 					$u = $this->User->save(array(
 						'pseudo' => $_POST['pseudo'],
-						'password' => AuthComponent::password($_POST['password']),
+						'password' => $_POST['password'],
 						'mail' => $_POST['mail']
 					), false);
 					if(!empty($u))
