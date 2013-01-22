@@ -134,7 +134,7 @@
 					$user['Visited'] = $this->Visited->find('all', array(
 						'conditions' => array('user_id' => $user['User']['id']),
 						'recursive' => -1,
-						'limit' => 2,
+						'limit' => 10,
 						'page' => $_POST['page']
 					));
 
@@ -188,10 +188,13 @@
 			$champsManquants = array();
 			if(empty($_POST['id']))
 				$champsManquants[] = 'id';
+			if(empty($_POST['page']))
+				$champsManquants[] = 'page';
 
 			if(empty($champsManquants))
 			{
 				$_POST['id'] = (int)$_POST['id'];
+				$_POST['page'] = (int)$_POST['page'];
 
 				// Recherche des amis
 				$this->loadModel('User');
@@ -211,7 +214,9 @@
 							'User.id', 'User.pseudo', 'User.name', 'User.surname',
 							'Place.id', 'Place.name', 'Place.photo_name', 'Place.latitude', 'Place.longitude'
 						),
-						'order' => 'Visited.created DESC'
+						'order' => 'Visited.created DESC',
+						'limit' => 10,
+						'page' => $_POST['page']
 					));
 
 					// Ajout des commentaires
