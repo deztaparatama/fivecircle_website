@@ -140,7 +140,8 @@
 				{
 					if($photo['size'] <= 300000)
 					{
-						if(in_array(pathinfo($photo['name'])['extension'], array('jpg', 'jpeg', 'png', 'gif')))
+						$extension = pathinfo($photo['name'])['extension'];
+						if(in_array($extension, array('jpg', 'jpeg', 'png', 'gif')))
 						{
 							$imagesize = getimagesize($photo['tmp_name']);
 							if($imagesize[0] <= 150 && $imagesize[1] <= 150)
