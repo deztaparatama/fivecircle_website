@@ -37,6 +37,7 @@
 <?php
 
 	echo $this->Form->create('User', array(
+		'type' => 'file',
 		'class' => 'form-horizontal',
 		'inputDefaults' => array(
 			'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
@@ -61,6 +62,9 @@
 		</li>
 		<li>
 			<?php echo $this->Html->link('Informations personnelles', '#tab2', array('data-toggle' => 'tab')); ?>
+		</li>
+		<li>
+			<?php echo $this->Html->link('Photo de profil', '#tab3', array('data-toggle' => 'tab')); ?>
 		</li>
 	</ul>
 	<div class="tab-content">
@@ -152,6 +156,24 @@
 					'type' => 'text',
 					'value' => $this->Date->show($this->request->data['User']['date_birth']),
 					'id' => 'datepicker'
+				));
+			?>
+		</div>
+		<div class="tab-pane" id="tab3">
+			<div class="control-group">
+				<label class="control-label">Votre photo actuelle :</label>
+				<div class="controls">
+					<?php echo $this->Html->image('users/' . $this->data['User']['photo_name'], array('class' => 'well well-small')); ?>
+				</div>
+			</div>
+			<?php
+				echo $this->Form->input('photo', array(
+					'label' => array(
+						'text' => 'Changer votre photo :',
+						'class' => 'control-label'
+					),
+					'type' => 'file',
+					'value' => ''
 				));
 			?>
 		</div>

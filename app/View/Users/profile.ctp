@@ -35,7 +35,10 @@
 </div>
 
 <div class="row">
-	<div class="span6">
+	<div class="span2">
+		<?php echo $this->Html->image('users/' . $user['User']['photo_name'], array('class' => 'well well-small')); ?>
+	</div>
+	<div class="span5">
 		<h4><i class="icon-user h4"></i> Informations personnelles</h4>
 		<ul>
 			<li><strong>Nom</strong> : <?php echo $user['User']['name']; ?></li>
@@ -43,7 +46,7 @@
 			<li><strong>Date de naissance</strong> : Le <?php echo $this->Date->show($user['User']['date_birth']); ?></li>
 		</ul>
 	</div>
-	<div class="span6">
+	<div class="span5">
 		<h4><i class="icon-file h4"></i> Informations utilisateur</h4>
 		<ul>
 			<li><strong>Statut</strong> : <?php echo $status[$user['User']['status']]; ?></li>

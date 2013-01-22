@@ -7,6 +7,7 @@ CREATE TABLE users
 	name VARCHAR(50),
 	surname VARCHAR(50),
 	date_birth DATE,
+	photo_name VARCHAR(50) DEFAULT '0.png',
 	status NUMERIC(1) DEFAULT 1,
 	created DATE DEFAULT NOW(),
 

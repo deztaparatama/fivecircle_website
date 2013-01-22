@@ -104,39 +104,6 @@
 
 		public function settings($id = 0)
 		{
-			// $id = (int)$id;
-			// if($id == 0)
-			// 	$idUser = $this->Auth->user('id');
-			// else if($this->Auth->user('status') >= 2)
-			// 	$idUser = $id;
-			// else
-			// {
-			// 	$this->Session->setFlash('Vous ne pouvez pas accéder aux réglages des autres utilisateurs', 'flash', array('type' => 'error'));
-			// 	$this->redirect(array('controller' => 'users', 'action' => 'settings'));
-			// }
-
-			// if(!empty($this->request->data))
-			// {
-			// 	$this->Session->setFlash('Héhé ! Ça ne marche pas encore ... mais les erreurs ci-dessous sont tout à fait normales ;)', 'flash', array('type' => 'warning'));
-			// }
-			// else
-			// {
-			// 	$this->data = $this->User->find('first', array(
-			// 		'conditions' => array('id' => $idUser),
-			// 		'recursive' => -1
-			// 	));
-			// }
-
-			// if(empty($this->data))
-			// {
-			// 	$this->Session->setFlash('Ce membre n\'existe pas', 'flash', array('type' => 'error'));
-			// 	$this->redirect(array('controller' => 'users', 'action' => 'settings'));
-			// }
-
-			// if($id == 0 || $id == $this->Auth->user('id'))
-			// 	$this->set('title_for_layout', 'Réglages de votre profil');
-			// else
-			// 	$this->set('title_for_layout', 'Réglages du profil de ' . $this->data['User']['pseudo']);
 			$id = (int)$id;
 			if($id == 0)
 			{
@@ -168,8 +135,58 @@
 					unset($this->request->data['User']['password2']);
 				}
 
+				$photo = $this->request->data['User']['photo'];
+				if($photo['error'] == 0)
+				{
+					if($photo['size'] <= 300000)
+					{
+						if(in_array(pathinfo($photo['name'])['extension'], array('jpg', 'jpeg', 'png', 'gif')))
+						{
+							$imagesize = getimagesize($photo['tmp_name']);
+							if($imagesize[0] <= 150 && $imagesize[1] <= 150)
+							{
+								if(move_uploaded_file($photo['tmp_name'], 'img/users/' . $id . image_type_to_extension($imagesize[2])))
+								{
+									if($user['User']['photo_name'] != '0.png' &&
+									   $user['User']['photo_name'] != $id . image_type_to_extension($imagesize[2]) &&
+									   is_file('img/users/' . $user['User']['photo_name']))
+									{
+										unlink('img/users/' . $user['User']['photo_name']);
+									}
+									$this->request->data['User']['photo_name'] = $id . image_type_to_extension($imagesize[2]);
+									unset($this->request->data['User']['photo']);
+								}
+								else
+								{
+									$this->User->validationErrors['photo'] = array('Réessayer, erreur inconnue');
+									$this->Session->setFlash('Il y a une erreur avec la photo de profil', 'flash', array('type' => 'error'));
+								}
+							}
+							else
+							{
+								$this->User->validationErrors['photo'] = array('L\'image est trop grande, veuillez ne pas dépasser 150*150px');
+								$this->Session->setFlash('Il y a une erreur avec la photo de profil', 'flash', array('type' => 'error'));
+							}
+						}
+						else
+						{
+							$this->User->validationErrors['photo'] = array('L\'image n\'a pas une bonne extension, veuillez utiliser jpg, jpeg, png ou gif');
+							$this->Session->setFlash('Il y a une erreur avec la photo de profil', 'flash', array('type' => 'error'));
+						}
+					}
+					else
+					{
+						$this->User->validationErrors['photo'] = array('L\'image est trop lourde, veuillez ne pas dépasser les 300Ko');
+						$this->Session->setFlash('Il y a une erreur avec la photo de profil', 'flash', array('type' => 'error'));
+					}
+				}
+				else if($photo['error'] != 4)
+				{
+					die('Erreur lors de l\'upload de l\'image (' . $photo['error'] . ')');
+				}
+
 				$this->User->id = $id;
-				if($this->User->save($this->request->data))
+				if(empty($this->User->validationErrors) && $this->User->save($this->request->data))
 				{
 					$this->Session->setFlash('Les modifications ont bien étés enregistrées', 'flash', array('type' => 'success'));
 					$user = $this->User->find('first', array(
@@ -177,7 +194,7 @@
 						'recursive' => -1
 					));
 				}
-				else
+				else if(empty($this->User->validationErrors))
 				{
 					$this->Session->setFlash('Il y a une erreur dans le formulaire', 'flash', array('type' => 'error'));
 				}
