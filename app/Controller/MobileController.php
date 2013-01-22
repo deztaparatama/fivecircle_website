@@ -105,6 +105,54 @@
 			$this->set('_serialize', 'request');
 		}
 
+		public function signup()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['pseudo']))
+				$champsManquants[] = 'pseudo';
+			if(empty($_POST['password']))
+				$champsManquants[] = 'password';
+			if(empty($_POST['mail']))
+				$champsManquants[] = 'mail';
+
+			if(empty($champsManquants))
+			{
+				$this->loadModel('User');
+				$user = $this->User->find('first', array(
+					'conditions' => array(
+						'OR' => array('pseudo' => $_POST['pseudo'], 'mail' => $_POST['mail'])
+					),
+					'recursive' => -1
+				));
+
+				if(empty($user))
+				{
+					$u = $this->User->save(array(
+						'pseudo' => $_POST['pseudo'],
+						'password' => AuthComponent::password($_POST['password']),
+						'mail' => $_POST['mail']
+					), false);
+					if(!empty($u))
+						$this->set('request', (int)$this->User->id);
+					else
+						$this->set('request', 0);
+				}
+				else
+				{
+					$this->set('request', ($user['User']['pseudo'] == $_POST['pseudo']) ? -1 : -2);
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
+
 		public function userPlaces()
 		{
 			if($this->layoutPath != 'json')
