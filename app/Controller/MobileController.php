@@ -113,20 +113,36 @@
 			$champsManquants = array();
 			if(empty($_POST['id']))
 				$champsManquants[] = 'id';
+			if(empty($_POST['page']))
+				$champsManquants[] = 'page';
 
 			if(empty($champsManquants))
 			{
 				$_POST['id'] = (int)$_POST['id'];
+				$_POST['page'] = (int)$_POST['page'];
 
 				$this->loadModel('User');
-				$user = $this->User->findById($_POST['id'], array('id', 'pseudo', 'mail', 'name', 'surname', 'date_birth', 'status', 'created'));
+				$user = $this->User->find('first', array(
+					'conditions' => array('id' => $_POST['id']),
+					'fields' => array('id', 'pseudo', 'mail', 'name', 'surname', 'date_birth', 'status', 'created'),
+					'recursive' => 1
+				));
 
 				if(!empty($user))
 				{
+					$this->loadModel('Visited');
+					$user['Visited'] = $this->Visited->find('all', array(
+						'conditions' => array('user_id' => $user['User']['id']),
+						'recursive' => -1,
+						'limit' => 2,
+						'page' => $_POST['page']
+					));
+
 					$this->loadModel('Place');
 					$timeline = array();
 					foreach($user['Visited'] as $k => $v)
 					{
+						$user['Visited'][$k] = $v = $user['Visited'][$k]['Visited'];
 						$timeline[$k] = $this->Place->findById($v['place_id'], array('id', 'name', 'photo_name'));
 						$timeline[$k]['date'] = $v['created'];
 						foreach($user['Mark'] as $l => $w)
