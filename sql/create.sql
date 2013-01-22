@@ -9,7 +9,7 @@ CREATE TABLE users
 	date_birth DATE,
 	photo_name VARCHAR(50) DEFAULT '0.png',
 	status NUMERIC(1) DEFAULT 1,
-	created DATE DEFAULT NOW(),
+	created TIMESTAMP DEFAULT NOW(),
 
 	PRIMARY KEY (id)
 );

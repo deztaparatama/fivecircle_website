@@ -50,7 +50,7 @@
 		<h4><i class="icon-file h4"></i> Informations utilisateur</h4>
 		<ul>
 			<li><strong>Statut</strong> : <?php echo $status[$user['User']['status']]; ?></li>
-			<li><strong>Date d'inscription</strong> : Le <?php echo $this->Date->show($user['User']['created'], true, true); ?></li>
+			<li><strong>Date d'inscription</strong> : Le <?php echo $this->Date->show($user['User']['created'], true, true, true); ?></li>
 		</ul>
 	</div>
 </div>

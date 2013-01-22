@@ -2,7 +2,7 @@ SET datestyle TO european;
 
 -- users(id, pseudo, password, mail, name, surname, date_birth, photo_name, status, created)
 INSERT INTO users VALUES(DEFAULT, 'iotaquigere', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'benoit.gros.93@gmail.com', 'Gros', 'Benoit', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, 'chapa', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mikckaël', '8/12/2012', '2.jpeg', DEFAULT, '01/01/2012');
+INSERT INTO users VALUES(DEFAULT, 'chapa', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mickaël', '8/12/2012', '2.jpeg', DEFAULT, '01/01/2012');
 INSERT INTO users VALUES(DEFAULT, 'skorp', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'vincentdimper@gmail.com', 'Dimper', 'Vincent', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
 INSERT INTO users VALUES(DEFAULT, 'KonRan', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'timothe.bournay@gmail.com', 'Bournay', 'Timothe', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
 INSERT INTO users VALUES(DEFAULT, 'elunywow', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'elunywow@gmail.com', 'Pinto', 'Alexandre', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
