@@ -32,9 +32,12 @@
 						$v['User']['id']
 					)); ?>,<br>
 					Le <?php echo $this->Date->show($v['Visited']['created'], true, false, true); ?>
+					<?php if (isset($v['Mark'])): ?>
+						<br>Sa note : <span class="rating<?php echo $v['Mark']['mark'] ?>"></span>
+					<?php endif; ?>
 					<?php if (isset($v['PlaceComment'])): ?>
 						<blockquote class="pull-right"><?php echo $v['PlaceComment']['content']; ?></blockquote>
-					<?php endif ?>
+					<?php endif; ?>
 				</p>
 				<div class="clearfix"></div>
 			</div>

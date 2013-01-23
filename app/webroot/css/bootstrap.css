@@ -5067,3 +5067,51 @@ footer {
   position: relative;
   left: 15px;
 }
+.rating0 {
+  display: inline-block;
+  width: 89px;
+  height: 15px;
+  position: relative;
+  top: 2px;
+  background-image: url('../img/rating0.png');
+}
+.rating1 {
+  display: inline-block;
+  width: 89px;
+  height: 15px;
+  position: relative;
+  top: 2px;
+  background-image: url('../img/rating1.png');
+}
+.rating2 {
+  display: inline-block;
+  width: 89px;
+  height: 15px;
+  position: relative;
+  top: 2px;
+  background-image: url('../img/rating2.png');
+}
+.rating3 {
+  display: inline-block;
+  width: 89px;
+  height: 15px;
+  position: relative;
+  top: 2px;
+  background-image: url('../img/rating3.png');
+}
+.rating4 {
+  display: inline-block;
+  width: 89px;
+  height: 15px;
+  position: relative;
+  top: 2px;
+  background-image: url('../img/rating4.png');
+}
+.rating5 {
+  display: inline-block;
+  width: 89px;
+  height: 15px;
+  position: relative;
+  top: 2px;
+  background-image: url('../img/rating5.png');
+}
