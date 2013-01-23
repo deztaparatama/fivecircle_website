@@ -330,4 +330,24 @@
 				'recursive' => -1
 			)));
 		}
+
+		public function friendsList()
+		{
+			$this->loadModel('Friends');
+			$friends = $this->Friends->find('all', array(
+				'conditions' => array('user_id' => $this->Auth->user('id')),
+			));
+
+			$this->loadModel('User');
+			$users = array();
+			foreach($friends as $v)
+			{
+				$users[] = $this->User->find('first', array(
+					'conditions' => array('id' => $v['Friends']['friend_id']),
+					'recursive' => -1
+				));
+			}
+
+			$this->set('users', $users);
+		}
 	}

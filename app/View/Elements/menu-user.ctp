@@ -3,6 +3,7 @@
 	$linkProfile = ($this->request->controller == 'users' AND $this->request->action == 'profile' AND $user['User']['id'] == $this->Session->read('Auth.User.id'));
 	$linkSettings = ($this->request->controller == 'users' AND $this->request->action == 'settings' AND $this->request->data['User']['id'] == $this->Session->read('Auth.User.id'));
 	$linkUsersList = ($this->request->controller == 'users' AND $this->request->action == 'usersList');
+	$linkFriendsList = ($this->request->controller == 'users' AND $this->request->action == 'friendsList');
 	$linkUser = ($linkProfile OR $linkSettings OR $linkUsersList);
 ?>
 
@@ -19,6 +20,9 @@
 				<ul class="nav">
 					<li<?php echo $linkIndex ? ' class="active"' : ''; ?>>
 						<?php echo $this->Html->link('<i class="icon-home"></i>Accueil', array('controller' => 'users', 'action' => 'index'), array('escape' => false)); ?>
+					</li>
+					<li<?php echo $linkFriendsList ? ' class="active"' : ''; ?>>
+						<?php echo $this->Html->link('<i class="icon-list"></i>Liste d\'amis', array('controller' => 'users', 'action' => 'friendsList'), array('escape' => false)); ?>
 					</li>
 				</ul>
 			</div>
