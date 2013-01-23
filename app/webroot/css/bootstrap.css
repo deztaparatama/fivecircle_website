@@ -5115,3 +5115,9 @@ footer {
   top: 2px;
   background-image: url('../img/rating5.png');
 }
+.blackLink {
+  color: #333333;
+}
+.blackLink:hover {
+  color: #0d0d0d;
+}
