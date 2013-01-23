@@ -135,14 +135,62 @@
 						'password' => $_POST['password'],
 						'mail' => $_POST['mail']
 					), false);
-					if(!empty($u))
-						$this->set('request', (int)$this->User->id);
-					else
-						$this->set('request', 0);
+
+					$this->set('request', (!empty($u)) ? (int)$this->User->id : 0);
 				}
 				else
 				{
 					$this->set('request', ($user['User']['pseudo'] == $_POST['pseudo']) ? -1 : -2);
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
+
+		public function addFriend()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['id']))
+				$champsManquants[] = 'id';
+			if(empty($_POST['friend']))
+				$champsManquants[] = 'friend';
+
+			if(empty($champsManquants))
+			{
+				$this->loadModel('User');
+				$user = $this->User->find('count', array(
+					'conditions' => array(
+						'id' => array($_POST['id'], $_POST['friend'])
+					)
+				));
+				if($user == 2)
+				{
+					$this->loadModel('Friend');
+					if($this->Friend->find('count', array(
+						'conditions' => array('user_id' => $_POST['id'], 'friend_id' => $_POST['friend'])
+					)) == 0)
+					{
+						$u = $this->Friend->save(array(
+							'user_id' => $_POST['id'],
+							'friend_id' => $_POST['friend']
+						), false);
+						$this->set('request', (!empty($u)) ? 0 : 1);
+					}
+					else
+					{
+						$this->set('request', 1);
+					}
+				}
+				else
+				{
+					$this->set('request', 1);
 				}
 			}
 			else
