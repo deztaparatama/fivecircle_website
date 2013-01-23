@@ -74,3 +74,39 @@
 		</ul>
 	</div>
 </div>
+
+<div class="page-header">
+	<h1>
+		<?php
+		if($user['User']['id'] == $this->Session->read('Auth.User.id'))
+			echo 'Vos activités';
+		else
+			echo 'Ses activités';
+		?>
+	</h1>
+</div>
+
+<div class="timeline">
+	<?php foreach ($user['Timeline'] as $v) : ?>
+
+		<div class="row-fluid">
+			<div class="span6 offset3 well">
+				<div class="pull-left">
+					<?php echo $this->Html->image('places/' . $v['Place']['photo_name']); ?>
+				</div>
+				<p>
+					<strong><?php echo $v['Place']['name']; ?></strong><br>
+					Le <?php echo $this->Date->show($v['Visited']['created'], true, false, true); ?>
+					<?php if (isset($v['Mark'])): ?>
+						<br>Sa note : <span class="rating<?php echo $v['Mark']['mark'] ?>"></span>
+					<?php endif; ?>
+					<?php if (isset($v['PlaceComment'])): ?>
+						<blockquote class="pull-right"><?php echo $v['PlaceComment']['content']; ?></blockquote>
+					<?php endif; ?>
+				</p>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+
+	<?php endforeach ?>
+</div>
