@@ -30,21 +30,24 @@
 					);
 				}
 				echo '&nbsp;';
-				if($isFriend)
+				if($user['User']['id'] != $this->Session->read('Auth.User.id'))
 				{
-					echo $this->Html->link(
-						'<i class="icon-remove icon-white"></i> Supprimer des amis',
-						array('controller' => 'users', 'action' => 'removeFriend', $user['User']['id']),
-						array('escape' => false, 'class' => 'btn btn-danger')
-					);
-				}
-				else
-				{
-					echo $this->Html->link(
-						'<i class="icon-plus icon-white"></i> Ajouter en amis',
-						array('controller' => 'users', 'action' => 'addFriend', $user['User']['id']),
-						array('escape' => false, 'class' => 'btn btn-success')
-					);
+					if($isFriend)
+					{
+						echo $this->Html->link(
+							'<i class="icon-remove icon-white"></i> Supprimer des amis',
+							array('controller' => 'users', 'action' => 'removeFriend', $user['User']['id']),
+							array('escape' => false, 'class' => 'btn btn-danger')
+						);
+					}
+					else
+					{
+						echo $this->Html->link(
+							'<i class="icon-plus icon-white"></i> Ajouter en amis',
+							array('controller' => 'users', 'action' => 'addFriend', $user['User']['id']),
+							array('escape' => false, 'class' => 'btn btn-success')
+						);
+					}
 				}
 			?>
 		</div>
