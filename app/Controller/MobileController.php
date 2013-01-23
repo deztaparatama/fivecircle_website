@@ -301,4 +301,78 @@
 
 			$this->set('_serialize', 'request');
 		}
+
+		public function place()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['id']))
+				$champsManquants[] = 'id';
+			if(empty($_POST['page']))
+				$champsManquants[] = 'page';
+
+			if(empty($champsManquants))
+			{
+				$_POST['id'] = (int)$_POST['id'];
+				$this->loadModel('Place');
+				$place = $this->Place->find('first', array(
+					'conditions' => array('id' => $_POST['id']),
+					'recursive' => -1
+				));
+				if(!empty($place))
+				{
+					$this->loadModel('Visited');
+					$place['Timeline'] = $this->Visited->find('all', array(
+						'conditions' => array('place_id' => $place['Place']['id']),
+						'recursive' => -1,
+						//'limit' => 3,
+						'page' => $_POST['page']
+					));
+
+					$this->loadModel('User');
+					foreach($place['Timeline'] as $k => $v)
+					{
+						$place['Timeline'][$k] += $this->User->find('first', array(
+							'conditions' => array('id' => $v['Visited']['user_id']),
+							'fields' => array('id', 'pseudo', 'name', 'surname'),
+							'recursive' => -1
+						));
+					}
+
+					$this->loadModel('Mark');
+					foreach($place['Timeline'] as $k => $v)
+					{
+						$place['Timeline'][$k] += $this->Mark->find('first', array(
+							'conditions' => array('place_id' => $place['Place']['id'], 'user_id' => $v['User']['id']),
+							'fields' => array('id', 'mark'),
+							'recursive' => -1
+						));
+					}
+
+					$this->loadModel('PlaceComment');
+					foreach($place['Timeline'] as $k => $v)
+					{
+						$place['Timeline'][$k] += $this->PlaceComment->find('first', array(
+							'conditions' => array('place_id' => $place['Place']['id'], 'user_id' => $v['User']['id']),
+							'fields' => array('id', 'content'),
+							'recursive' => -1
+						));
+					}
+
+					$this->set('request', $place);
+				}
+				else
+				{
+					$this->set('request', array('error' => 1));
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
 	}
