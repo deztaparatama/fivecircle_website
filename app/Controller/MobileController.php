@@ -279,7 +279,12 @@
 					foreach($user['Visited'] as $k => $v)
 					{
 						$user['Visited'][$k] = $v = $user['Visited'][$k]['Visited'];
-						$timeline[$k] = $this->Place->findById($v['place_id'], array('id', 'name', 'photo_name', 'latitude', 'longitude'));
+						$timeline[$k] = $this->Place->find('first', array(
+							'conditions' => array('id' => $v['place_id']),
+							'fields' => array('id', 'name', 'photo_name', 'latitude', 'longitude'),
+							'recursive' => -1
+						));
+
 						$timeline[$k]['date'] = $v['created'];
 						foreach($user['Mark'] as $l => $w)
 						{
