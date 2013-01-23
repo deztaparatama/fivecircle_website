@@ -71,6 +71,7 @@
 		<ul>
 			<li><strong>Statut</strong> : <?php echo $status[$user['User']['status']]; ?></li>
 			<li><strong>Date d'inscription</strong> : Le <?php echo $this->Date->show($user['User']['created'], true, true, true); ?></li>
+			<li><strong>Nombre de lieux visités</strong> : <?php echo $user['User']['nbVisited']; ?></li>
 		</ul>
 	</div>
 </div>

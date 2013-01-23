@@ -18,6 +18,7 @@
 			<th>Prénom</th>
 			<th>Nom</th>
 			<th>Date d'inscription</th>
+			<th>Nombre de lieux visités</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -27,6 +28,7 @@
 				<td><?php echo $v['User']['surname']; ?></td>
 				<td><?php echo $v['User']['name']; ?></td>
 				<td><?php echo $v['User']['created']; ?></td>
+				<td><?php echo $v['User']['nbVisited']; ?></td>
 			</tr>
 		<?php endforeach ?>
 	</tbody>

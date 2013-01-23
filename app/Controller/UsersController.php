@@ -111,6 +111,7 @@
 				),
 				'order' => 'Visited.created DESC'
 			));
+			$d['User']['nbVisited'] = count($d['Timeline']);
 
 			// Ajout des commentaires
 			$this->loadModel('PlaceComment');
@@ -325,10 +326,19 @@
 
 		public function usersList()
 		{
-			$this->set('users', $this->User->find('all', array(
+			$users = $this->User->find('all', array(
 				'order' => 'created',
 				'recursive' => -1
-			)));
+			));
+
+			foreach($users as $k => $v)
+			{
+				$users[$k]['User']['nbVisited'] = $this->User->Visited->find('count', array(
+					'conditions' => array('user_id' => $v['User']['id'])
+				));
+			}
+
+			$this->set('users', $users);
 		}
 
 		public function friendsList()
@@ -338,16 +348,23 @@
 				'conditions' => array('user_id' => $this->Auth->user('id')),
 			));
 
-			$this->loadModel('User');
-			$users = array();
+			$f = array();
 			foreach($friends as $v)
+				$f[] = $v['Friends']['friend_id'];
+
+			$this->loadModel('User');
+			$friends = $this->User->find('all', array(
+				'conditions' => array('id' => $f),
+				'recursive' => -1
+			));
+
+			foreach($friends as $k => $v)
 			{
-				$users[] = $this->User->find('first', array(
-					'conditions' => array('id' => $v['Friends']['friend_id']),
-					'recursive' => -1
+				$friends[$k]['User']['nbVisited'] = $this->User->Visited->find('count', array(
+					'conditions' => array('user_id' => $v['User']['id'])
 				));
 			}
 
-			$this->set('users', $users);
+			$this->set('users', $friends);
 		}
 	}
