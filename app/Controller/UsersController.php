@@ -322,4 +322,12 @@
 
 			$this->set('timeline', $timeline);
 		}
+
+		public function usersList()
+		{
+			$this->set('users', $this->User->find('all', array(
+				'order' => 'created',
+				'recursive' => -1
+			)));
+		}
 	}

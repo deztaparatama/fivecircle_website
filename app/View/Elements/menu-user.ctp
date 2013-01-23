@@ -2,7 +2,8 @@
 	$linkIndex = ($this->request->controller == 'users' AND $this->request->action == 'index');
 	$linkProfile = ($this->request->controller == 'users' AND $this->request->action == 'profile' AND $user['User']['id'] == $this->Session->read('Auth.User.id'));
 	$linkSettings = ($this->request->controller == 'users' AND $this->request->action == 'settings' AND $this->request->data['User']['id'] == $this->Session->read('Auth.User.id'));
-	$linkUser = ($linkProfile OR $linkSettings);
+	$linkUsersList = ($this->request->controller == 'users' AND $this->request->action == 'usersList');
+	$linkUser = ($linkProfile OR $linkSettings OR $linkUsersList);
 ?>
 
 <div class="navbar navbar-fixed-top">
@@ -31,6 +32,10 @@
 							</li>
 							<li<?php echo $linkSettings ? ' class="active"' : ''; ?>>
 								<?php echo $this->Html->link('<i class="icon-wrench"></i>Réglages', array('controller' => 'users', 'action' => 'settings'), array('escape' => false)); ?>
+							</li>
+							<li class="divider"></li>
+							<li<?php echo $linkUsersList ? ' class="active"' : ''; ?>>
+								<?php echo $this->Html->link('<i class="icon-list"></i>Liste des membres', array('controller' => 'users', 'action' => 'usersList'), array('escape' => false)); ?>
 							</li>
 							<li class="divider"></li>
 							<li>
