@@ -95,11 +95,47 @@
 				$this->redirect(array('controller' => 'users', 'action' => 'profile'));
 			}
 
+			$friend = $this->User->Friend->find('all', array(
+				'conditions' => array('user_id' => $this->Auth->user('id'), 'friend_id' => $d['User']['id'])
+			));
+			$this->set('isFriend', empty($friend) ? false : true);
+
 			if($id == 0 || $id == $this->Auth->user('id'))
 				$this->set('title_for_layout', 'Votre profil');
 			else
 				$this->set('title_for_layout', 'Profil de ' . $d['User']['pseudo']);
 			$this->set('user', $d);
+		}
+
+		public function addFriend($id)
+		{
+			$this->loadModel('Friend');
+			if($this->Friend->find('count', array(
+				'conditions' => array('user_id' => $this->Auth->user('id'), 'friend_id' => $id)
+			)) == 0)
+			{
+				$this->Friend->save(array(
+					'user_id' => $this->Auth->user('id'),
+					'friend_id' => $id
+				), false);
+			}
+
+			$this->redirect($this->referer());
+		}
+
+		public function removeFriend($id)
+		{
+			$this->loadModel('Friend');
+			$d = $this->Friend->find('first', array(
+				'conditions' => array('user_id' => $this->Auth->user('id'), 'friend_id' => $id),
+				'fields' => array('id')
+			));
+			if(!empty($d))
+			{
+				$this->Friend->delete($d['Friend']['id']);
+			}
+
+			$this->redirect($this->referer());
 		}
 
 		public function settings($id = 0)
