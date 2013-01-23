@@ -225,7 +225,7 @@
 				{
 					$friends[$k] += $this->User->find('first', array(
 						'conditions' => array('id' => $v['Friend']['friend_id']),
-						'fields' => array('id', 'pseudo', 'surname', 'name'),
+						'fields' => array('id', 'pseudo', 'surname', 'name', 'photo_name'),
 						'recursive' => -1
 					));
 					unset($friends[$k]['Friend']);
