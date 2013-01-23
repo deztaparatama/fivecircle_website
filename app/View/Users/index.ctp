@@ -5,31 +5,40 @@
 ?>
 
 <div class="hero-unit">
-	<h1>Activités de vos amis <small>Modifier ça !</small></h1>
+	<h1>Activités de vos amis</h1>
 	<p>
 		Trouvez ici tous les lieux qu'ont fréquenté vos amis !
 	</p>
 </div>
 
-<?php foreach($timeline as $v): ?>
-	
-	<div class="well">
-		<div class="pull-left placeThumbnail">
-			<?php echo $this->Html->image('places/' . $v['Place']['photo_name']); ?>
-			<br><em class="centre"><?php echo $v['Place']['name']; ?></em>
-		</div>
-		<?php if(!empty($v['User']['surname']) OR !empty($v['User']['name'])): ?>
-			<strong><?php echo $v['User']['surname'] . ' ' . $v['User']['name']; ?></strong>
-		<?php else: ?>
-			<strong><?php echo $v['User']['pseudo']; ?></strong>
-		<?php endif; ?>
-		<?php if(!empty($v['PlaceComment'])): ?>
-			<blockquote class="pull-right"><p><?php echo $v['PlaceComment']['content']; ?></p></blockquote>
-		<?php endif; ?>
-		<?php if(!empty($v['Mark']['mark'])): ?>
-			<br>Sa note : <span class="placeMark"><?php echo $v['Mark']['mark']; ?></span>
-		<?php endif ?>
-		<div class="clearfix"></div>
-	</div>
+<div class="timeline">
+	<?php
+	foreach ($timeline as $v) :
+		$userName = (!empty($v['User']['surname'])) ? $v['User']['surname'] : '';
+		$userName .= (!empty($v['User']['name'])) ? ' ' . $v['User']['name'] : '';
+		$userName = (empty($userName)) ? $v['User']['pseudo'] : $userName;
+	?>
 
-<?php endforeach; ?>
+		<div class="row-fluid">
+			<div class="span6 offset3 well">
+				<div class="pull-left">
+					<?php echo $this->Html->image('places/' . $v['Place']['photo_name']); ?>
+				</div>
+				<p>
+					<strong><?php echo $v['Place']['name']; ?></strong><br>
+					A été visité par <?php echo $this->Html->link($userName, array(
+						'controller' => 'users',
+						'action' => 'profile',
+						$v['User']['id']
+					)); ?>,<br>
+					Le <?php echo $this->Date->show($v['Visited']['created'], true, false, true); ?>
+					<?php if (isset($v['PlaceComment'])): ?>
+						<blockquote class="pull-right"><?php echo $v['PlaceComment']['content']; ?></blockquote>
+					<?php endif ?>
+				</p>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+
+	<?php endforeach ?>
+</div>

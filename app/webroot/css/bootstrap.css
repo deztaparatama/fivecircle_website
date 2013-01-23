@@ -5060,14 +5060,10 @@ i.h4 {
 footer {
   font-size: 0.8em;
 }
-.placeThumbnail {
-  margin-right: 20px;
-  margin-bottom: -10px;
+.timeline img {
+  max-height: 150px;
 }
-.placeThumbnail img {
-  height: 100px;
-}
-.centre {
-  display: block;
-  text-align: center;
+.timeline p {
+  position: relative;
+  left: 15px;
 }
