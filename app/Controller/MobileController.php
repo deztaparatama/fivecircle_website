@@ -327,7 +327,7 @@
 					$place['Timeline'] = $this->Visited->find('all', array(
 						'conditions' => array('place_id' => $place['Place']['id']),
 						'recursive' => -1,
-						//'limit' => 3,
+						'limit' => 15,
 						'page' => $_POST['page']
 					));
 
@@ -359,6 +359,12 @@
 							'fields' => array('id', 'content'),
 							'recursive' => -1
 						));
+						if(isset($place['Timeline'][$k]['PlaceComment']))
+						{
+							$place['Timeline'][$k]['PlaceComment']['likes'] = $this->PlaceComment->CommentLike->find('count', array(
+								'conditions' => array('place_comment_id' => $place['Timeline'][$k]['PlaceComment']['id'])
+							));
+						}
 					}
 
 					$this->set('request', $place);
