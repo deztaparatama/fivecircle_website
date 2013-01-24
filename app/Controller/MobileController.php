@@ -415,7 +415,7 @@
 
 				$this->loadModel('Place');
 				$place = $this->Place->find('first', array(
-					'conditions' => array('id' => $_POST['user_id']),
+					'conditions' => array('id' => $_POST['place_id']),
 					'recursive' => -1
 				));
 				if(!empty($place))
@@ -444,6 +444,7 @@
 					// Ajout des notes
 					$this->loadModel('Mark');
 					$place['nbMarks'] = 0;
+					$somme = 0;
 					foreach($place['Timeline'] as $k => $v)
 					{
 						$m = $this->Mark->find('first', array(
@@ -455,8 +456,10 @@
 						{
 							$place['Timeline'][$k] += $m;
 							$place['nbMarks'] ++;
+							$somme += $m['Mark']['mark'];
 						}
 					}
+					$place['rating'] = ($place['nbMarks'] > 0) ? $somme / $place['nbMarks'] : -1;
 
 					// Ajout des commentaires
 					$this->loadModel('PlaceComment');
