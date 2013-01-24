@@ -511,6 +511,42 @@
 			$this->set('_serialize', 'request');
 		}
 
+		public function namePlace()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['id']))
+				$champsManquants[] = 'id';
+
+			if(empty($champsManquants))
+			{
+				$_POST['id'] = (int)$_POST['id'];
+				$this->loadModel('Place');
+				$place = $this->Place->find('first', array(
+					'conditions' => array('id' => $_POST['id']),
+					'fields' => array('name'),
+					'recursive' => -1
+				));
+
+				if(!empty($place))
+				{
+					$this->set('request', $place['Place']['name']);
+				}
+				else
+				{
+					$this->set('request', array('error' => 1));
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
+
 		public function newVisit()
 		{
 			if($this->layoutPath != 'json')
