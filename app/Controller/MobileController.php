@@ -510,4 +510,69 @@
 
 			$this->set('_serialize', 'request');
 		}
+
+		public function newVisit()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['user_id']))
+				$champsManquants[] = 'user_id';
+			if(empty($_POST['place_id']))
+				$champsManquants[] = 'place_id';
+			if(!isset($_POST['commentaire']))
+				$champsManquants[] = 'commentaire';
+			if(!isset($_POST['note']))
+				$champsManquants[] = 'note';
+
+			if(empty($champsManquants))
+			{
+				$_POST['user_id'] = (int)$_POST['user_id'];
+				$_POST['place_id'] = (int)$_POST['place_id'];
+
+				$this->loadModel('Visited');
+				if($this->Visited->find('count', array(
+					'conditions' => array('user_id' => $_POST['user_id'], 'place_id' => $_POST['place_id'])
+				)) == 0)
+				{
+					$this->Visited->save(array(
+						'user_id' => $_POST['user_id'],
+						'place_id' => $_POST['place_id']
+					), false);
+
+					if(!empty($_POST['commentaire']))
+					{
+						$this->loadModel('PlaceComment');
+						$this->PlaceComment->save(array(
+							'user_id' => $_POST['user_id'],
+							'place_id' => $_POST['place_id'],
+							'content' => $_POST['commentaire']
+						), false);
+					}
+					if(!empty($_POST['note']))
+					{
+						$_POST['note'] = (int)$_POST['note'];
+						$this->loadModel('Mark');
+						$this->Mark->save(array(
+							'user_id' => $_POST['user_id'],
+							'place_id' => $_POST['place_id'],
+							'mark' => $_POST['note']
+						), false);
+					}
+
+					$this->set('request', 1);
+				}
+				else
+				{
+					$this->set('request', 0);
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
 	}
