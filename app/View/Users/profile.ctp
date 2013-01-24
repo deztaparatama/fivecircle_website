@@ -96,7 +96,7 @@
 					<?php echo $this->Html->image('places/' . $v['Place']['photo_name']); ?>
 				</div>
 				<p>
-					<strong><?php echo $v['Place']['name']; ?></strong><br>
+					<strong><?php echo $this->Html->link($v['Place']['name'], array('controller' => 'places', 'action' => 'place', $v['Place']['id']), array('class' => 'blackLink')); ?></strong><br>
 					Le <?php echo $this->Date->show($v['Visited']['created'], true, false, true); ?>
 					<?php if (isset($v['Mark'])): ?>
 						<br>Sa note : <span class="rating<?php echo $v['Mark']['mark'] ?>"></span>
