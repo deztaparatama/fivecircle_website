@@ -401,17 +401,21 @@
 				throw new NotFoundException();
 
 			$champsManquants = array();
-			if(empty($_POST['id']))
-				$champsManquants[] = 'id';
+			if(empty($_POST['user_id']))
+				$champsManquants[] = 'user_id';
+			if(empty($_POST['place_id']))
+				$champsManquants[] = 'place_id';
 			if(empty($_POST['page']))
 				$champsManquants[] = 'page';
 
 			if(empty($champsManquants))
 			{
-				$_POST['id'] = (int)$_POST['id'];
+				$_POST['user_id'] = (int)$_POST['user_id'];
+				$_POST['place_id'] = (int)$_POST['place_id'];
+
 				$this->loadModel('Place');
 				$place = $this->Place->find('first', array(
-					'conditions' => array('id' => $_POST['id']),
+					'conditions' => array('id' => $_POST['user_id']),
 					'recursive' => -1
 				));
 				if(!empty($place))
@@ -421,9 +425,12 @@
 						'conditions' => array('place_id' => $place['Place']['id']),
 						'recursive' => -1,
 						'limit' => 15,
-						'page' => $_POST['page']
+						'page' => $_POST['page'],
+						'order' => 'created DESC'
 					));
+					$place['nbVisited'] = count($place['Timeline']);
 
+					// Ajout des utilisateurs
 					$this->loadModel('User');
 					foreach($place['Timeline'] as $k => $v)
 					{
@@ -434,31 +441,63 @@
 						));
 					}
 
+					// Ajout des notes
 					$this->loadModel('Mark');
+					$place['nbMarks'] = 0;
 					foreach($place['Timeline'] as $k => $v)
 					{
-						$place['Timeline'][$k] += $this->Mark->find('first', array(
+						$m = $this->Mark->find('first', array(
 							'conditions' => array('place_id' => $place['Place']['id'], 'user_id' => $v['User']['id']),
 							'fields' => array('id', 'mark'),
 							'recursive' => -1
 						));
+						if(!empty($m))
+						{
+							$place['Timeline'][$k] += $m;
+							$place['nbMarks'] ++;
+						}
 					}
 
+					// Ajout des commentaires
 					$this->loadModel('PlaceComment');
+					$place['nbComments'] = 0;
 					foreach($place['Timeline'] as $k => $v)
 					{
-						$place['Timeline'][$k] += $this->PlaceComment->find('first', array(
+						$c = $this->PlaceComment->find('first', array(
 							'conditions' => array('place_id' => $place['Place']['id'], 'user_id' => $v['User']['id']),
 							'fields' => array('id', 'content'),
 							'recursive' => -1
 						));
-						if(isset($place['Timeline'][$k]['PlaceComment']))
+						if(!empty($c))
 						{
+							$place['Timeline'][$k] += $c;
 							$place['Timeline'][$k]['PlaceComment']['likes'] = $this->PlaceComment->CommentLike->find('count', array(
 								'conditions' => array('place_comment_id' => $place['Timeline'][$k]['PlaceComment']['id'])
 							));
+							$place['nbComments'] ++;
 						}
 					}
+
+					// Tri : amis en premiers
+					$this->loadModel('Friend');
+					$friends = array();
+					$noFriends = array();
+					$place['nbFriends'] = 0;
+					foreach($place['Timeline'] as $v)
+					{
+						if($this->Friend->find('count', array(
+							'conditions' => array('user_id' => $_POST['user_id'], 'friend_id' => $v['User']['id'])
+						)) == 1)
+						{
+							$friends[] = $v;
+							$place['nbFriends'] ++;
+						}
+						else
+						{
+							$noFriends[] = $v;
+						}
+					}
+					$place['Timeline'] = array_merge($friends,$noFriends);
 
 					$this->set('request', $place);
 				}
