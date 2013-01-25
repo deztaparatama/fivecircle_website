@@ -2,7 +2,7 @@ SET datestyle TO european;
 
 -- users(id, pseudo, password, mail, name, surname, date_birth, photo_name, status, created)
 INSERT INTO users VALUES(DEFAULT, 'ben', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'benoit.gros.93@gmail.com', 'Gros', 'Benoit', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
-INSERT INTO users VALUES(DEFAULT, 'chapa', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mickaël', '8/12/1994', '2.jpeg', DEFAULT, DEFAULT);
+INSERT INTO users VALUES(DEFAULT, 'chapa', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mickael', '8/12/1994', '2.jpeg', DEFAULT, DEFAULT);
 INSERT INTO users VALUES(DEFAULT, 'skorp', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'vincentdimper@gmail.com', 'Dimper', 'Vincent', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO users VALUES(DEFAULT, 'KonRan', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'timothe.bournay@gmail.com', 'Bournay', 'Timothe', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO users VALUES(DEFAULT, 'elunywow', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'elunywow@gmail.com', 'Pinto', 'Alexandre', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
@@ -18,7 +18,7 @@ INSERT INTO friends VALUES(DEFAULT, 3, 1, DEFAULT);
 -- places(id, name, photo_name, latitude, longitude)
 INSERT INTO places VALUES(DEFAULT, 'IUT2', 'IUT_2_-_Grenoble.JPG', 45.192026, 5.717327);
 INSERT INTO places VALUES(DEFAULT, 'Gare de Grenoble', 'signaletique-gare-grenoble-1.jpg', 45.191512, 5.714414);
-INSERT INTO places VALUES(DEFAULT, 'Église du sacré coeur', 'sacre_coeur.jpg', 45.191755, 5.716313);
+INSERT INTO places VALUES(DEFAULT, 'Eglise du sacre coeur', 'sacre_coeur.jpg', 45.191755, 5.716313);
 INSERT INTO places VALUES(DEFAULT, 'Le 17eme', '111212_pola17e1.jpg', 45.189905, 5.71576);
 INSERT INTO places VALUES(DEFAULT, 'Le Rabot', '23772881.jpg', 45.195833, 5.723656);
 
