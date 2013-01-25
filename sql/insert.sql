@@ -1,11 +1,11 @@
 SET datestyle TO european;
 
 -- users(id, pseudo, password, mail, name, surname, date_birth, photo_name, status, created)
-INSERT INTO users VALUES(DEFAULT, 'iotaquigere', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'benoit.gros.93@gmail.com', 'Gros', 'Benoit', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, 'chapa', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mickaël', '8/12/2012', '2.jpeg', DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, 'skorp', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'vincentdimper@gmail.com', 'Dimper', 'Vincent', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, 'KonRan', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'timothe.bournay@gmail.com', 'Bournay', 'Timothe', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
-INSERT INTO users VALUES(DEFAULT, 'elunywow', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'elunywow@gmail.com', 'Pinto', 'Alexandre', '8/12/2012', DEFAULT, DEFAULT, '01/01/2012');
+INSERT INTO users VALUES(DEFAULT, 'ben', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'benoit.gros.93@gmail.com', 'Gros', 'Benoit', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO users VALUES(DEFAULT, 'chapa', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'mickael.bourgier@gmail.com', 'Bourgier', 'Mickaël', '8/12/1994', '2.jpeg', DEFAULT, DEFAULT);
+INSERT INTO users VALUES(DEFAULT, 'skorp', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'vincentdimper@gmail.com', 'Dimper', 'Vincent', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO users VALUES(DEFAULT, 'KonRan', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'timothe.bournay@gmail.com', 'Bournay', 'Timothe', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO users VALUES(DEFAULT, 'elunywow', '24c77611993f4b5ce8751ee71f8d433acd61f673', 'elunywow@gmail.com', 'Pinto', 'Alexandre', '8/12/1993', DEFAULT, DEFAULT, DEFAULT);
 
 -- friends(id, user_id, friend_id, created)
 INSERT INTO friends VALUES(DEFAULT, 1, 2, DEFAULT);
@@ -18,7 +18,7 @@ INSERT INTO friends VALUES(DEFAULT, 3, 1, DEFAULT);
 -- places(id, name, photo_name, latitude, longitude)
 INSERT INTO places VALUES(DEFAULT, 'IUT2', 'IUT_2_-_Grenoble.JPG', 45.192026, 5.717327);
 INSERT INTO places VALUES(DEFAULT, 'Gare de Grenoble', 'signaletique-gare-grenoble-1.jpg', 45.191512, 5.714414);
-INSERT INTO places VALUES(DEFAULT, 'Mairie de Grenoble', 'La_Ville_de_Grenoble_cherche_des_b_n_voles.jpg', 45.186642, 5.736241);
+INSERT INTO places VALUES(DEFAULT, 'Église du sacré coeur', 'sacre_coeur.jpg', 45.191755, 5.716313);
 INSERT INTO places VALUES(DEFAULT, 'Le 17eme', '111212_pola17e1.jpg', 45.189905, 5.71576);
 INSERT INTO places VALUES(DEFAULT, 'Le Rabot', '23772881.jpg', 45.195833, 5.723656);
 
@@ -35,6 +35,7 @@ INSERT INTO visited VALUES(DEFAULT, 2, 2, '31/08/2012 15:23:12');
 INSERT INTO visited VALUES(DEFAULT, 3, 2, '31/08/2012 14:23:12');
 INSERT INTO visited VALUES(DEFAULT, 5, 2, '09/09/2012 09:23:12');
 INSERT INTO visited VALUES(DEFAULT, 4, 4, '17/03/2012 08:23:12');
+INSERT INTO visited VALUES(DEFAULT, 1, 3, '01/09/2011 11:24:12');
 
 -- marks(id, user_id, place_id, mark)
 INSERT INTO marks VALUES(DEFAULT, 1, 1, 0);
