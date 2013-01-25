@@ -260,7 +260,7 @@
 				$this->loadModel('User');
 				$user = $this->User->find('first', array(
 					'conditions' => array('id' => $_POST['id']),
-					'fields' => array('id', 'pseudo', 'mail', 'name', 'surname', 'date_birth', 'status', 'created'),
+					'fields' => array('id', 'pseudo', 'mail', 'name', 'surname', 'date_birth', 'photo_name', 'status', 'created'),
 					'recursive' => 1
 				));
 
@@ -352,7 +352,7 @@
 						'conditions' => array('User.id' => $friends),
 						'fields' => array(
 							'Visited.id', 'Visited.created',
-							'User.id', 'User.pseudo', 'User.name', 'User.surname',
+							'User.id', 'User.pseudo', 'User.name', 'User.surname', 'User.photo_name',
 							'Place.id', 'Place.name', 'Place.photo_name', 'Place.latitude', 'Place.longitude'
 						),
 						'order' => 'Visited.created DESC',
@@ -366,7 +366,8 @@
 					{
 						$timeline[$k] += $this->PlaceComment->find('first', array(
 							'conditions' => array('user_id' => $v['User']['id'], 'place_id' => $v['Place']['id']),
-							'fields' => array('id', 'content')
+							'fields' => array('id', 'content'),
+							'recursive' => -1
 						));
 					}
 
