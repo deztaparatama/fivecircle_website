@@ -6,7 +6,7 @@ CREATE TABLE users
 	mail VARCHAR(320) NOT NULL,
 	name VARCHAR(50) DEFAULT '',
 	surname VARCHAR(50) DEFAULT '',
-	date_birth DATE,
+	date_birth DATE DEFAULT '1970-01-01',
 	photo_name VARCHAR(50) DEFAULT '0.png',
 	status NUMERIC(1) DEFAULT 1,
 	created TIMESTAMP DEFAULT NOW(),
