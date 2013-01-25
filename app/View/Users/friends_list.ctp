@@ -27,7 +27,7 @@
 				<td><?php echo $this->Html->link($v['User']['pseudo'], array('controller' => 'users', 'action' => 'profile', $v['User']['id'])); ?></td>
 				<td><?php echo $v['User']['surname']; ?></td>
 				<td><?php echo $v['User']['name']; ?></td>
-				<td><?php echo $v['User']['created']; ?></td>
+				<td>Le <?php echo $this->Date->show($v['User']['created'], true, false, true); ?></td>
 				<td><?php echo $v['User']['nbVisited']; ?></td>
 			</tr>
 		<?php endforeach ?>
