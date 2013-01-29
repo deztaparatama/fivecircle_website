@@ -408,7 +408,7 @@
 					{
 						$place['Timeline'][$k] += $this->User->find('first', array(
 							'conditions' => array('id' => $v['Visited']['user_id']),
-							'fields' => array('id', 'pseudo', 'name', 'surname'),
+							'fields' => array('id', 'pseudo', 'name', 'surname', 'photo_name'),
 							'recursive' => -1
 						));
 					}
