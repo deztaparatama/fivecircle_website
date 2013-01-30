@@ -625,4 +625,16 @@
 
 			$this->set('_serialize', 'request');
 		}
+
+		public function usersList()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$this->loadModel('User');
+			$users = $this->User->find('list');
+
+			$this->set('request', $users);
+			$this->set('_serialize', 'request');
+		}
 	}

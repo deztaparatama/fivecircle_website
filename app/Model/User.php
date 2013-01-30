@@ -2,7 +2,7 @@
 
 	class User extends AppModel
 	{
-		public $displayField = 'name';
+		public $displayField = 'pseudo';
 
 		public $hasMany = array(
 			'Friend' => array(
