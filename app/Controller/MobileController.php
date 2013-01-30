@@ -132,9 +132,9 @@
 				$champsManquants[] = 'id';
 			if(empty($_POST['mail']))
 				$champsManquants[] = 'mail';
-			if(empty($_POST['surname']))
+			if(!isset($_POST['surname']))
 				$champsManquants[] = 'surname';
-			if(empty($_POST['name']))
+			if(!isset($_POST['name']))
 				$champsManquants[] = 'name';
 			if(empty($_POST['date_birth']))
 				$champsManquants[] = 'date_birth';
