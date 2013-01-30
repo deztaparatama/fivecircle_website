@@ -120,8 +120,11 @@
 			{
 				// PAS TROP TOP ÇA ...
 				$elems = explode(' ', $this->data['User']['date_birth']);
-				$mois = array('Janvier' => '01', 'Février' => '02', 'Mars' => '03', 'Avril' => '04', 'Mai' => '05', 'Juin' => '06', 'Juillet' => '07', 'Août' => '08', 'Septembre' => '09', 'Octobre' => '10', 'Novembre' => '11', 'Décembre' => '12');
-				$this->data['User']['date_birth'] = $elems[0] . '-' . $mois[$elems[1]] . '-' . $elems[2];
+				if(count($elems) == 3)
+				{
+					$mois = array('Janvier' => '01', 'Février' => '02', 'Mars' => '03', 'Avril' => '04', 'Mai' => '05', 'Juin' => '06', 'Juillet' => '07', 'Août' => '08', 'Septembre' => '09', 'Octobre' => '10', 'Novembre' => '11', 'Décembre' => '12');
+					$this->data['User']['date_birth'] = $elems[0] . '-' . $mois[$elems[1]] . '-' . $elems[2];
+				}
 			}
 			
 			return true;

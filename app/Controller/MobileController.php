@@ -122,6 +122,54 @@
 			$this->set('_serialize', 'request');
 		}
 
+		public function editProfile()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['id']))
+				$champsManquants[] = 'id';
+			if(empty($_POST['mail']))
+				$champsManquants[] = 'mail';
+			if(empty($_POST['surname']))
+				$champsManquants[] = 'surname';
+			if(empty($_POST['name']))
+				$champsManquants[] = 'name';
+			if(empty($_POST['date_birth']))
+				$champsManquants[] = 'date_birth';
+
+			if(empty($champsManquants))
+			{
+				$_POST['id'] = (int) $_POST['id'];
+
+				$this->loadModel('User');
+				if($this->User->find('count', array(
+					'conditions' => array('id' => $_POST['id'])
+				)) == 1)
+				{
+					$u = $this->User->save(array(
+						'id' => $_POST['id'],
+						'mail' => $_POST['mail'],
+						'surname' => $_POST['surname'],
+						'name' => $_POST['name'],
+						'date_birth' => $_POST['date_birth']
+					), false);
+					$this->set('request', (!empty($u)) ? 0 : 1);
+				}
+				else
+				{
+					$this->set('request', 1);
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
+
 		public function addFriend()
 		{
 			if($this->layoutPath != 'json')
