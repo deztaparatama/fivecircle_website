@@ -637,4 +637,16 @@
 			$this->set('request', $users);
 			$this->set('_serialize', 'request');
 		}
+
+		public function placesList()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$this->loadModel('Place');
+			$users = $this->Place->find('list');
+
+			$this->set('request', $users);
+			$this->set('_serialize', 'request');
+		}
 	}
