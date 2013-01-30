@@ -172,6 +172,58 @@
 			$this->set('_serialize', 'request');
 		}
 
+		public function deleteFriend()
+		{
+			if($this->layoutPath != 'json')
+				throw new NotFoundException();
+
+			$champsManquants = array();
+			if(empty($_POST['id']))
+				$champsManquants[] = 'id';
+			if(empty($_POST['friend']))
+				$champsManquants[] = 'friend';
+
+			if(empty($champsManquants))
+			{
+				$this->loadModel('User');
+				$user = $this->User->find('count', array(
+					'conditions' => array(
+						'id' => array($_POST['id'], $_POST['friend'])
+					)
+				));
+				if($user == 2)
+				{
+					$this->loadModel('Friend');
+					if($d = $this->Friend->find('first', array(
+						'conditions' => array('user_id' => $_POST['id'], 'friend_id' => $_POST['friend']),
+						'fields' => 'id'
+					)))
+					{
+						$this->Friend->delete($d['Friend']['id']);
+						$u = $this->Friend->find('first', array(
+							'user_id' => $_POST['id'],
+							'friend_id' => $_POST['friend']
+						));
+						$this->set('request', (!empty($u)) ? 0 : 1);
+					}
+					else
+					{
+						$this->set('request', 1);
+					}
+				}
+				else
+				{
+					$this->set('request', 1);
+				}
+			}
+			else
+			{
+				$this->set('request', array('Champs manquants' => $champsManquants));
+			}
+
+			$this->set('_serialize', 'request');
+		}
+
 		public function friends()
 		{
 			if($this->layoutPath != 'json')
