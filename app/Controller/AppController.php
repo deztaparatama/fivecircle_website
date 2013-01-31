@@ -16,7 +16,10 @@
 					'action' => 'login'
 				),
 				'authError' => 'Pour pouvoir accéder à cette page, veuillez vous connecter',
-				'logoutRedirect' => '/'
+				'logoutRedirect' => array(
+					'controller' => 'users',
+					'action' => 'login'
+				)
 			)
 		);
 

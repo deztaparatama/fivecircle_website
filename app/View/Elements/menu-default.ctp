@@ -6,7 +6,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<?php echo $this->Html->link('five<strong>circle</strong>', '/', array('class' => 'brand', 'escape' => false)); ?>
+			<?php echo $this->Html->link('five<strong>circle</strong>', array('controller' => 'users', 'action' => 'login'), array('class' => 'brand', 'escape' => false)); ?>
 			<div class="nav-collapse">
 				<ul class="nav pull-right">
 					<li><?php echo $this->Html->link('S\'inscrire', array('controller' => 'users', 'action' => 'signup')) ?></li>
